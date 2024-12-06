@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .bg_heart {
+            position: absolute;
+            top: -8;
+            left: 0;
+            width: 100%;
+            height: 105%;
+            overflow: hidden;
+            background-image: url("bg.png");
+            background-size: 100% 100%;
+            z-index: -1;
+        }
+
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: cursive;
+        }
+
+        .heart {
+            position: absolute;
+            top: -50%;
+            transform: rotate(-45deg);
+            background: red;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .heart:after {
+            right: -50%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes love {
+            0% {
+                top: 110%;
+            }
+
+            100% {
+                top: -10%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg_heart"></div>
+    <div class="container">
+        <h2 id="text1"></h2>
+    </div>
+    <div>
+        <audio id="audio" autoplay>
+            <source src="sng.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        var love = setInterval(function () {
+            var r_num = Math.floor(Math.random() * 50) + 1;
+            var r_size = Math.floor(Math.random() * 65) + 10;
+            var r_left = Math.floor(Math.random() * 100) + 1;
+            var r_bg = Math.floor(Math.random() * 25) + 100;
+            var r_time = Math.floor(Math.random() * 5) + 5;
+
+            const heartHTML = `
+                <div class='heart' style='
+                    width:${r_size}px;
+                    height:${r_size}px;
+                    left:${r_left}%;
+                    background:rgba(255,${r_bg - 25},${r_bg},1);
+                    animation:love ${r_time}s ease;'></div>
+            `;
+            document.querySelector('.bg_heart').insertAdjacentHTML('beforeend', heartHTML);
+        }, 500);
+
+        var i = 0;
+        var txt1 = "Hi Shivani.....!  << Now I want to say something special to you. <<< Please read everything carefully...!  When I saw you for the first time < You seemed something special to me. << YOU ARE THE MOST BEAUTIFUL CREATURE CREATED BY GOD IN THIS UNIVERSE.... <<Every moment I spend with you feels like a fairytale, and I want our story to last forever.<You’re not just my best friend, you are my dream, my happiness, and my heart <<<<Will you catch me and hold my hand forever?";
+        var speed = 80;
+
+        function typeWriter() {
+            if (i < txt1.length) {
+                const textElement = document.getElementById("text1");
+                if (txt1.charAt(i) === '<') {
+                    textElement.innerHTML += '<br>';
+                } else {
+                    textElement.innerHTML += txt1.charAt(i);
+                }
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        typeWriter();
+       
+
+        const startingPoint = 10; // 30 seconds
+        const audioElement = document.getElementById('audio');
+
+        // Prevent repeated execution using a flag
+        let isTimeSet = false;
+
+        // Adjust the starting point when the audio is ready to play
+        audioElement.addEventListener('canplay', () => {
+            if (!isTimeSet) {
+                audioElement.currentTime = startingPoint;
+                isTimeSet = true; // Ensure this runs only once
+            }
+        });
+
+    </script>
+</body>
+
+</html>
